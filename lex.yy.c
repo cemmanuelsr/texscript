@@ -16,6 +16,7 @@
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
+#include "texscript.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
