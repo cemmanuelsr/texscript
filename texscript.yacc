@@ -26,22 +26,20 @@ int yylex(void);
 %token PRINTF TO TEXT LOOP OPENING_IF ENDING_IF SCANF
 
 
-%start TOP_LEVEL
+%start BLOCK
 
 %%
 empty: ;
 
 unary_operator : T_PLUS
                | T_MINUS
-               | T_NOT
+               | LOG_NOT
                ;
 
 FACTOR : unary_operator FACTOR
        | T_NUMBER
        | T_IDENTIFIER
-       | READ OPENING_BRACKET CLOSING_BRACKET
-       | OPENING_BRACKET BIN_EXPRESSION CLOSING_BRACKET
-       ;
+
 
 term_operator : T_MULT
               | T_AND
@@ -86,8 +84,8 @@ condition : STATEMENT COMMERCE_E BIN_EXPRESSION
 
 CONDITIONAL : OPENING_IF condition ENDING_IF ;
 
-arguments : IDENTIFIER
-          | COMMA IDENTIFIER
+arguments : T_IDENTIFIER
+          | COMMA T_IDENTIFIER
           ;
 
 returns : arguments ;
