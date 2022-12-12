@@ -29,8 +29,6 @@ int yylex(void);
 %start PROGRAM
 
 %%
-empty: ;
-
 unary_operation : T_PLUS
                 | T_MINUS
                 | LOG_NOT
@@ -57,8 +55,8 @@ term_operator : T_MULT
               | T_AND
               ;
 
-TERM : TERM 
-     | TERM term_operator FACTOR
+TERM : FACTOR
+     | FACTOR term_operator TERM
      | T_DIV OPENING_BRACKET FACTOR CLOSING_BRACKET OPENING_BRACKET FACTOR CLOSING_BRACKET
      ;
 
@@ -67,8 +65,8 @@ exp_operator : T_PLUS
              | T_OR
              ;
 
-EXPRESSION : EXPRESSION 
-           | EXPRESSION exp_operator TERM
+EXPRESSION : TERM
+           | TERM exp_operator EXPRESSION
            ;
 
 rel_operator : LOG_EQ
@@ -77,8 +75,8 @@ rel_operator : LOG_EQ
              | T_CONCAT
              ;
 
-REL_EXPRESSION : REL_EXPRESSION
-               | REL_EXPRESSION rel_operator EXPRESSION
+REL_EXPRESSION : EXPRESSION
+               | EXPRESSION rel_operator REL_EXPRESSION
                ;
 
 ASSIGNMENT : T_IDENTIFIER T_ASSIGN REL_EXPRESSION ;
@@ -99,7 +97,11 @@ STATEMENT : ASSIGNMENT
           | BLOCK
           ;
 
-BLOCK : OPENING_BLOCK STATEMENT CLOSING_BLOCK ;
+statement_list : STATEMENT
+               | statement_list STATEMENT
+               ;
+
+BLOCK : OPENING_BLOCK statement_list CLOSING_BLOCK ;
 
 declaration_list : T_IDENTIFIER
                  | T_IDENTIFIER COMMA declaration_list
@@ -110,7 +112,7 @@ DECLARATION : T_IDENTIFIER BLOCK
             ;
 
 PROGRAM : DECLARATION
-        | 
+        | PROGRAM DECLARATION
         ;
 
 %%
