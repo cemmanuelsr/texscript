@@ -6,102 +6,112 @@ int yylex(void);
 %}
 
 /* separators */
-%token COMMA CIRCUMFLEX UNDERSCORE DOUBLE_BACK_SLASH COLON COMMERCE_E
+%token COMMA COLON
 
 /* special tokens */
-%token T_TYPE T_NUMBER T_RETURN T_IDENTIFIER
+%token T_NUMBER T_RETURN T_IDENTIFIER HAT
 
 /* operations */
 %token T_PLUS T_MINUS T_MULT T_DIV T_ASSIGN T_AND T_OR T_CONCAT
 
 /* delimiters */
 %token OPENING_BLOCK CLOSING_BLOCK
-%token OPENING_BRACKET CLOSING_BRACKET 
-%token OPENING_CURLY_BRACKET CLOSING_CURLY_BRACKET
+%token OPENING_PARENTHESIS CLOSING_PARENTHESIS
+%token OPENING_BRACKET CLOSING_BRACKET
 
 /* logical operations */
-%token LOG_GT LOG_GE LOG_LT LOG_LE LOG_AND LOG_OR LOG_EQ LOG_NEQ LOG_NOT
+%token LOG_GT LOG_LT LOG_EQ LOG_NOT
 
 /* reserved words */
-%token PRINTF TO TEXT LOOP OPENING_IF ENDING_IF SCANF
+%token PRINTF IF ELSE LOOP SCANF
 
 
-%start BLOCK
+%start PROGRAM
 
 %%
 empty: ;
 
-unary_operator : T_PLUS
-               | T_MINUS
-               | LOG_NOT
-               ;
+unary_operation : T_PLUS
+                | T_MINUS
+                | LOG_NOT
+                ;
 
-FACTOR : unary_operator FACTOR
+arguments : REL_EXPRESSION
+          | REL_EXPRESSION COMMA arguments
+          ;
+
+FUNC_CALL : T_IDENTIFIER OPENING_PARENTHESIS CLOSING_PARENTHESIS
+          | T_IDENTIFIER OPENING_PARENTHESIS arguments CLOSING_PARENTHESIS
+          ;
+
+FACTOR : unary_operation FACTOR
        | T_NUMBER
        | T_IDENTIFIER
+       | FUNC_CALL
+       | OPENING_PARENTHESIS REL_EXPRESSION CLOSING_PARENTHESIS
+       | SCANF OPENING_PARENTHESIS CLOSING_PARENTHESIS
+       ;
 
 
 term_operator : T_MULT
               | T_AND
               ;
 
-TERM : TERM term_operator FACTOR
-     | T_DIV OPENING_CURLY_BRACKET EXPRESSION CLOSING_CURLY_BRACKET OPENING_CURLY_BRACKET EXPRESSION CLOSING_CURLY_BRACKET ;
+TERM : TERM 
+     | TERM term_operator FACTOR
+     | T_DIV OPENING_BRACKET FACTOR CLOSING_BRACKET OPENING_BRACKET FACTOR CLOSING_BRACKET
+     ;
 
 exp_operator : T_PLUS
              | T_MINUS
              | T_OR
+             ;
+
+EXPRESSION : EXPRESSION 
+           | EXPRESSION exp_operator TERM
+           ;
+
+rel_operator : LOG_EQ
+             | LOG_GT
+             | LOG_LT
              | T_CONCAT
              ;
 
-EXPRESSION : EXPRESSION exp_operator TERM ;
+REL_EXPRESSION : REL_EXPRESSION
+               | REL_EXPRESSION rel_operator EXPRESSION
+               ;
 
-bin_operator : LOG_EQ
-             | LOG_GT
-             | LOG_LT
-             | LOG_NEQ
-             | LOG_GE
-             | LOG_LE
-             ;
+ASSIGNMENT : T_IDENTIFIER T_ASSIGN REL_EXPRESSION ;
 
-BIN_EXPRESSION : BIN_EXPRESSION bin_operator EXPRESSION ;
+PRINT : PRINTF OPENING_PARENTHESIS REL_EXPRESSION CLOSING_PARENTHESIS ;
 
-ASSIGNMENT : T_IDENTIFIER T_ASSIGN BIN_EXPRESSION ;
+WHILE : LOOP HAT OPENING_BRACKET REL_EXPRESSION CLOSING_BRACKET STATEMENT ;
 
-PRINT : PRINTF TO TEXT OPENING_CURLY_BRACKET BIN_EXPRESSION CLOSING_CURLY_BRACKET ;
+CONDITIONAL : IF OPENING_PARENTHESIS REL_EXPRESSION CLOSING_PARENTHESIS STATEMENT
+            | IF OPENING_PARENTHESIS REL_EXPRESSION CLOSING_PARENTHESIS ELSE STATEMENT
+            ;
 
-initial_state : UNDERSCORE ASSIGNMENT
-              | initial_state COMMA ASSIGNMENT
-              ;
-
-guard_clause : CIRCUMFLEX BIN_EXPRESSION ;
-
-WHILE : LOOP initial_state guard_clause STATEMENT ;
-
-condition : STATEMENT COMMERCE_E BIN_EXPRESSION
-          | DOUBLE_BACK_SLASH condition
-          ;
-
-CONDITIONAL : OPENING_IF condition ENDING_IF ;
-
-arguments : T_IDENTIFIER
-          | COMMA T_IDENTIFIER
-          ;
-
-returns : arguments ;
-
-FUNCTION : T_IDENTIFIER COLON OPENING_BRACKET arguments CLOSING_BRACKET TO OPENING_BRACKET returns CLOSING_BRACKET STATEMENT ;
-
-STATEMENT : empty
-          | ASSIGNMENT
+STATEMENT : ASSIGNMENT
           | PRINT
           | WHILE
           | CONDITIONAL
-          | FUNCTION
+          | T_RETURN REL_EXPRESSION
           | BLOCK
           ;
 
 BLOCK : OPENING_BLOCK STATEMENT CLOSING_BLOCK ;
+
+declaration_list : T_IDENTIFIER
+                 | T_IDENTIFIER COMMA declaration_list
+                 ;
+
+DECLARATION : T_IDENTIFIER BLOCK
+            | T_IDENTIFIER COLON declaration_list BLOCK
+            ;
+
+PROGRAM : DECLARATION
+        | 
+        ;
 
 %%
 
