@@ -490,8 +490,9 @@ char *yytext;
 #line 2 "texscript.lex"
 #include <stdio.h>
 #include <string.h>
-#line 494 "lex.yy.c"
+#include "texscript.h"
 #line 495 "lex.yy.c"
+#line 496 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -708,10 +709,10 @@ YY_DECL
 		}
 
 	{
-#line 6 "texscript.lex"
+#line 7 "texscript.lex"
 
 
-#line 715 "lex.yy.c"
+#line 716 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -770,162 +771,162 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "texscript.lex"
+#line 9 "texscript.lex"
 { return COMMA; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "texscript.lex"
+#line 10 "texscript.lex"
 { return HAT; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "texscript.lex"
+#line 11 "texscript.lex"
 { return COLON; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "texscript.lex"
+#line 12 "texscript.lex"
 { return T_PLUS; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "texscript.lex"
+#line 13 "texscript.lex"
 { return T_MINUS; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "texscript.lex"
+#line 14 "texscript.lex"
 { return T_DIV; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 14 "texscript.lex"
+#line 15 "texscript.lex"
 { return T_MULT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "texscript.lex"
+#line 16 "texscript.lex"
 { return T_ASSIGN; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "texscript.lex"
+#line 17 "texscript.lex"
 { return T_AND; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 17 "texscript.lex"
+#line 18 "texscript.lex"
 { return T_OR; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 18 "texscript.lex"
+#line 19 "texscript.lex"
 { return T_CONCAT; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 20 "texscript.lex"
+#line 21 "texscript.lex"
 { return OPENING_BLOCK; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 21 "texscript.lex"
+#line 22 "texscript.lex"
 { return CLOSING_BLOCK; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 22 "texscript.lex"
+#line 23 "texscript.lex"
 { return OPENING_PARENTHESIS; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 23 "texscript.lex"
+#line 24 "texscript.lex"
 { return CLOSING_PARENTHESIS; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 24 "texscript.lex"
+#line 25 "texscript.lex"
 { return OPENING_BRACKET; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 25 "texscript.lex"
+#line 26 "texscript.lex"
 { return CLOSING_BRACKET; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 27 "texscript.lex"
+#line 28 "texscript.lex"
 { return LOG_GT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 28 "texscript.lex"
+#line 29 "texscript.lex"
 { return LOG_LT; }
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 29 "texscript.lex"
+#line 30 "texscript.lex"
 { return LOG_NOT; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 30 "texscript.lex"
+#line 31 "texscript.lex"
 { return LOG_EQ; }
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 31 "texscript.lex"
+#line 32 "texscript.lex"
 { return LOG_NEQ; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 33 "texscript.lex"
+#line 34 "texscript.lex"
 { return PRINTF; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 34 "texscript.lex"
+#line 35 "texscript.lex"
 { return IF; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 35 "texscript.lex"
+#line 36 "texscript.lex"
 { return ELSE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 36 "texscript.lex"
+#line 37 "texscript.lex"
 { return LOOP; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 37 "texscript.lex"
+#line 38 "texscript.lex"
 { return SCANF; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 39 "texscript.lex"
+#line 40 "texscript.lex"
 { return T_NUMBER; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 40 "texscript.lex"
+#line 41 "texscript.lex"
 { return T_RETURN; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 41 "texscript.lex"
+#line 42 "texscript.lex"
 { return T_IDENTIFIER; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 43 "texscript.lex"
+#line 44 "texscript.lex"
 ECHO;
 	YY_BREAK
-#line 929 "lex.yy.c"
+#line 930 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1930,7 +1931,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 43 "texscript.lex"
+#line 44 "texscript.lex"
 
 
 
